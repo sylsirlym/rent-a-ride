@@ -4,20 +4,20 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * Created by sylvester
  * Project rent-a-ride
  * User: sylvester
  * Date: 2/25/20
- * Time: 1:11 AM
+ * Time: 11:04 PM
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponseDTO {
-    private int statusCode;
-    private String statusMessage;
-    private List<?> data;
+public class ProfilesDTO {
+    private int pinStatus;
+    private String msisdn;
+    private String fName;
+    private String otherNames;
+    private String emailAddress;
 }

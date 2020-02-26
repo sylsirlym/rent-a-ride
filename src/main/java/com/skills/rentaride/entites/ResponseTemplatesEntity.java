@@ -1,11 +1,14 @@
 package com.skills.rentaride.entites;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -19,33 +22,17 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "profiles")
+@Table(name = "responseTemplates")
 @Where(clause = "active='1'")
-public class ProfilesEntity {
+public class ResponseTemplatesEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int profileID;
-    private String identificationNumber;
-    private String msisdn;
-    private String pinHash;
-    private int pinRetries;
-    private int identificationTypeID;
-    @UpdateTimestamp
-    private Date dateLastAccessed;
-    private Date dateTempLocked;
-    private Date datePinChanged;
+    private int responseTemplateID;
+    private int statusCode;
+    private String responseTemplate;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
     @UpdateTimestamp
     private Date dateModified;
-
-    @OneToOne()
-    @JoinColumn(name = "customerID", nullable = false)
-    private CustomersEntity customersEntity;
-
-    @OneToOne()
-    @JoinColumn(name = "pinStatus", nullable = false)
-    private PinStatusEntity pinStatusEntity;
-
 }

@@ -21,7 +21,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @Table(name = "customers")
-@Where(clause = "active='1")
+@Where(clause = "active='1'")
 public class CustomersEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.skills.rentaride.repository;
 
-import com.skills.rentaride.entites.ProfilesEntity;
+import com.skills.rentaride.entites.PinStatusEntity;
+import com.skills.rentaride.entites.ResponseTemplatesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -12,6 +13,6 @@ import org.springframework.stereotype.Repository;
  * Time: 1:04 AM
  */
 @Repository
-public interface ProfilesRepository extends JpaRepository<ProfilesEntity,Integer> {
-    ProfilesEntity findProfilesEntityByMsisdn(String msisdn);
+public interface PinStatusRepository extends JpaRepository<PinStatusEntity,Integer> {
+    PinStatusEntity findByPinStatus(String pinStatus);
 }

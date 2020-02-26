@@ -2,15 +2,16 @@ package com.skills.rentaride.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skills.rentaride.dtos.requests.CreateItemTypeDTO;
 import com.skills.rentaride.dtos.requests.CreateUserDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
+import com.skills.rentaride.exceptions.GenericException;
+import com.skills.rentaride.exceptions.InvalidPinStatusException;
+import com.skills.rentaride.exceptions.ProfileNotFoundException;
 import com.skills.rentaride.services.RentARideService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by sylvester
@@ -22,14 +23,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/v1")
 @AllArgsConstructor
-public class RentARideController {
+public class UsersController {
  private RentARideService rentARideService;
  private final Logger logger;
  private final ObjectMapper objectMapper;
 
  @PostMapping("/customer/create")
-    public ResponseDTO createUser(@RequestBody CreateUserDTO createUserDTO) throws JsonProcessingException {
+    public ResponseDTO createUser(@RequestBody CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
      logger.info("Create user controller. Payload::{}", objectMapper.writeValueAsString(createUserDTO));
      return rentARideService.createUser(createUserDTO);
+ }
+
+ @PostMapping("/customer/{msisdn}")
+ public ResponseDTO fetchCustomerProfile(@PathVariable String msisdn) throws JsonProcessingException, ProfileNotFoundException {
+  logger.info("Fetch user controller. Msisdn::{}", msisdn);
+  return rentARideService.fetchUser(msisdn);
  }
 }
