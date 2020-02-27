@@ -2,7 +2,7 @@ package com.skills.rentaride.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.skills.rentaride.dtos.requests.CreateItemTypeDTO;
+import com.skills.rentaride.dtos.requests.AuthPinDTO;
 import com.skills.rentaride.dtos.requests.CreateUserDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
 import com.skills.rentaride.exceptions.GenericException;
@@ -34,9 +34,15 @@ public class UsersController {
      return rentARideService.createUser(createUserDTO);
  }
 
- @PostMapping("/customer/{msisdn}")
+ @GetMapping("/customer/{msisdn}")
  public ResponseDTO fetchCustomerProfile(@PathVariable String msisdn) throws JsonProcessingException, ProfileNotFoundException {
   logger.info("Fetch user controller. Msisdn::{}", msisdn);
   return rentARideService.fetchUser(msisdn);
+ }
+
+ @PostMapping("/customer/authenticate")
+ public ResponseDTO authenticateCustomerPin(@RequestBody AuthPinDTO authPinDTO) throws JsonProcessingException, ProfileNotFoundException, GenericException {
+  logger.info("Auth Customer Pin. Payload::{}", objectMapper.writeValueAsString(authPinDTO));
+  return rentARideService.authPin(authPinDTO);
  }
 }

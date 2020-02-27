@@ -164,4 +164,12 @@ public class Utils {
                 profilesEntity.getCustomersEntity().getEmailAddress()
         );
     }
+
+    public boolean validatePin(ProfilesEntity profilesEntity, String pin) throws GenericException {
+        logger.info("Pin::{}",  profilesEntity.getPinHash());
+        logger.info("Pin2::{}",  this.hashPin(profilesEntity.getProfileID() + pin,
+                applicationConfigs.getPinHashAlgorithm()));
+        return profilesEntity.getPinHash().equals(this.hashPin(profilesEntity.getProfileID() + pin,
+                applicationConfigs.getPinHashAlgorithm()));
+    }
 }

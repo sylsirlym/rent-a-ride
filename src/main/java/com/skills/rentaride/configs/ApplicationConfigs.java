@@ -22,6 +22,8 @@ import java.util.Map;
 @NoArgsConstructor
 public class ApplicationConfigs {
     private int successStatusCode;
+    private int failureStatusCode;
+    private int authFailedStatusCode;
     private String defaultSuccessMessage;
     private String defaultFailureMessage;
     //Pin

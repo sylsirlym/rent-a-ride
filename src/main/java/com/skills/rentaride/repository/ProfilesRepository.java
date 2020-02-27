@@ -4,6 +4,8 @@ import com.skills.rentaride.entites.ProfilesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Created by sylvester
  * Project rent-a-ride
@@ -13,5 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ProfilesRepository extends JpaRepository<ProfilesEntity,Integer> {
-    ProfilesEntity findProfilesEntityByMsisdn(String msisdn);
+   Optional<ProfilesEntity> findProfilesEntityByMsisdn(String msisdn);
 }

@@ -3,6 +3,7 @@ package com.skills.rentaride.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skills.rentaride.configs.ApplicationConfigs;
+import com.skills.rentaride.dtos.requests.AuthPinDTO;
 import com.skills.rentaride.dtos.requests.CreateUserDTO;
 import com.skills.rentaride.dtos.responses.ProfilesDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
@@ -19,6 +20,7 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,8 +34,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class RentARideService {
-    private ProfilesRepository profilesRepository;
-    private CustomersRepository customersRepository;
+    private StorageService storageService;
     private Utils utils;
     private ApplicationConfigs applicationConfigs;
     private final Logger logger;
@@ -42,13 +43,13 @@ public class RentARideService {
 
     public ResponseDTO createUser(CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
         CustomersEntity customersEntity = utils.createCustomerObject(createUserDTO);
-        customersRepository.save(customersEntity);
+        storageService.persistCustomersEntity(customersEntity);
         ProfilesEntity profilesEntity = utils.createProfileObject(createUserDTO, customersEntity);
         logger.info("Profiles Entity to save::{}", objectMapper.writeValueAsString(profilesEntity));
-        ProfilesEntity newP = profilesRepository.save(profilesEntity);
+        ProfilesEntity newP = storageService.persistProfilesEntity(profilesEntity);
         //Generate One Time Pin
         utils.generateOTP(newP);
-        profilesRepository.save(newP);
+        storageService.persistProfilesEntity(newP);
 
         return utils.formulateResponse(
                 applicationConfigs.getSuccessStatusCode(),
@@ -59,11 +60,7 @@ public class RentARideService {
     }
 
     public ResponseDTO fetchUser(String msisdn) throws ProfileNotFoundException, JsonProcessingException {
-        ProfilesEntity profilesEntity = profilesRepository.findProfilesEntityByMsisdn(msisdn);
-        if(profilesEntity==null){
-            throw new ProfileNotFoundException("Profile not found");
-        }
-        ProfilesDTO profilesDTO = utils.mapProfileDetails(profilesEntity);
+        ProfilesDTO profilesDTO = utils.mapProfileDetails(storageService.fetchProfileByMsisdn(msisdn));
         logger.info("Mapped profile::{}", objectMapper.writeValueAsString(profilesDTO));
         return utils.formulateResponse(
                 applicationConfigs.getPinStatusCodeMap().get(profilesDTO.getPinStatus()),
@@ -71,5 +68,26 @@ public class RentARideService {
                 profilesDTO,
                 new HashMap<>()
                 );
+    }
+
+    public ResponseDTO authPin(AuthPinDTO authPinDTO) throws ProfileNotFoundException, GenericException {
+        ProfilesEntity profilesEntity = storageService.fetchProfileByMsisdn(authPinDTO.getMsisdn());
+        //Todo Evaluate pin status
+        if(utils.validatePin(profilesEntity, authPinDTO.getPin())){
+            logger.info("Pin is correct");
+            return utils.formulateResponse(
+                    applicationConfigs.getSuccessStatusCode(),
+                    applicationConfigs.getDefaultSuccessMessage(),
+                    Collections.emptyList(),
+                    new HashMap<>()
+            );
+        } else {
+            return utils.formulateResponse(
+                    applicationConfigs.getAuthFailedStatusCode(),
+                    applicationConfigs.getDefaultFailureMessage(),
+                    Collections.emptyList(),
+                    new HashMap<>()
+            );
+        }
     }
 }
