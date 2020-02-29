@@ -8,7 +8,7 @@ import com.skills.rentaride.dtos.responses.ResponseDTO;
 import com.skills.rentaride.exceptions.GenericException;
 import com.skills.rentaride.exceptions.InvalidPinStatusException;
 import com.skills.rentaride.exceptions.ProfileNotFoundException;
-import com.skills.rentaride.services.RentARideService;
+import com.skills.rentaride.services.UsersService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -24,25 +24,25 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1")
 @AllArgsConstructor
 public class UsersController {
- private RentARideService rentARideService;
+ private UsersService usersService;
  private final Logger logger;
  private final ObjectMapper objectMapper;
 
  @PostMapping("/customer/create")
     public ResponseDTO createUser(@RequestBody CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
      logger.info("Create user controller. Payload::{}", objectMapper.writeValueAsString(createUserDTO));
-     return rentARideService.createUser(createUserDTO);
+     return usersService.createUser(createUserDTO);
  }
 
  @GetMapping("/customer/{msisdn}")
  public ResponseDTO fetchCustomerProfile(@PathVariable String msisdn) throws JsonProcessingException, ProfileNotFoundException {
   logger.info("Fetch user controller. Msisdn::{}", msisdn);
-  return rentARideService.fetchUser(msisdn);
+  return usersService.fetchUser(msisdn);
  }
 
  @PostMapping("/customer/authenticate")
  public ResponseDTO authenticateCustomerPin(@RequestBody AuthPinDTO authPinDTO) throws JsonProcessingException, ProfileNotFoundException, GenericException {
   logger.info("Auth Customer Pin. Payload::{}", objectMapper.writeValueAsString(authPinDTO));
-  return rentARideService.authPin(authPinDTO);
+  return usersService.authPin(authPinDTO);
  }
 }
