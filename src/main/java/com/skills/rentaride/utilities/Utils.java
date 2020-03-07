@@ -74,7 +74,7 @@ public class Utils {
                         ? this.formulateStatusMessage(
                                 this.fetchStatusMessage(statusCode), templates)
                         : defaultMessage,
-                data instanceof List ? (List<?>)data : List.of(data)
+                data instanceof List ? (List<?>)data : Arrays.asList(data)
         );
     }
 
