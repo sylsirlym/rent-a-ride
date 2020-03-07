@@ -31,29 +31,22 @@ public class LendItemsController {
  private final ObjectMapper objectMapper;
 
  @PostMapping("/item-types/create")
- public ResponseDTO authenticateCustomerPin(@RequestBody CreateItemTypeDTO createItemTypeDTO) throws JsonProcessingException, ProfileNotFoundException, GenericException {
+ public ResponseDTO authenticateCustomerPin(@RequestBody CreateItemTypeDTO createItemTypeDTO) throws JsonProcessingException {
   logger.info("Create item type. Payload::{}", objectMapper.writeValueAsString(createItemTypeDTO));
   return itemsService.createItemType(createItemTypeDTO);
  }
 
  @GetMapping("/item-types/fetch")
- public ResponseDTO fetchItemType() throws JsonProcessingException, ProfileNotFoundException {
+ public ResponseDTO fetchItemType() throws JsonProcessingException {
   logger.info("Fetch item types controller");
   return itemsService.fetchItemType();
  }
 
  @PutMapping("/item-types/update")
- public ResponseDTO updateItemType(@RequestBody EditItemTypeDTO editItemTypeDTO) throws JsonProcessingException, ProfileNotFoundException, ItemTypeNotFoundException {
+ public ResponseDTO updateItemType(@RequestBody EditItemTypeDTO editItemTypeDTO) throws JsonProcessingException, ItemTypeNotFoundException {
   logger.info("About to update item type with payload::{}", objectMapper.writeValueAsString(editItemTypeDTO));
   return itemsService.updateItemType(editItemTypeDTO);
  }
-
- @GetMapping("/item-types/fetch")
- public ResponseDTO fetchCustomerProfile() throws JsonProcessingException, ProfileNotFoundException {
-  logger.info("Fetch item types controller");
-  return itemsService.fetchItemType();
- }
-
 
  @PostMapping("/item/create")
  public ResponseDTO createUser(@RequestBody CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
