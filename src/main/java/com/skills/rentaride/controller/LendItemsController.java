@@ -2,14 +2,11 @@ package com.skills.rentaride.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.skills.rentaride.dtos.requests.CreateItemDTO;
 import com.skills.rentaride.dtos.requests.CreateItemTypeDTO;
-import com.skills.rentaride.dtos.requests.CreateUserDTO;
 import com.skills.rentaride.dtos.requests.EditItemTypeDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
-import com.skills.rentaride.exceptions.GenericException;
-import com.skills.rentaride.exceptions.InvalidPinStatusException;
-import com.skills.rentaride.exceptions.ItemTypeNotFoundException;
-import com.skills.rentaride.exceptions.ProfileNotFoundException;
+import com.skills.rentaride.exceptions.*;
 import com.skills.rentaride.services.ItemsService;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
@@ -49,8 +46,20 @@ public class LendItemsController {
  }
 
  @PostMapping("/item/create")
- public ResponseDTO createUser(@RequestBody CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
-  logger.info("Create user controller. Payload::{}", objectMapper.writeValueAsString(createUserDTO));
-  return itemsService.createUser(createUserDTO);
+ public ResponseDTO createItem(@RequestBody CreateItemDTO createItemDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException, ItemTypeNotFoundException, ItemOwnerNotFoundException {
+  logger.info("Create user controller. Payload::{}", objectMapper.writeValueAsString(createItemDTO));
+  return itemsService.createItem(createItemDTO);
+ }
+
+ @GetMapping("/items/fetch")
+ public ResponseDTO fetchItems() throws JsonProcessingException {
+  logger.info("Fetch items controller");
+  return itemsService.fetchItems();
+ }
+
+ @PostMapping("/item/fetch/{itemID}")
+ public ResponseDTO fetchItem(@PathVariable int itemID) throws JsonProcessingException, ItemNotFoundException {
+  logger.info("Fetch items controller");
+  return itemsService.fetchItem(itemID);
  }
 }

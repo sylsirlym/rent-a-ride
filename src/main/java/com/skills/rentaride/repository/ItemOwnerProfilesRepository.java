@@ -1,7 +1,7 @@
 package com.skills.rentaride.repository;
 
-import com.skills.rentaride.entites.CustomersEntity;
-import com.skills.rentaride.entites.ItemTypeEntity;
+import com.skills.rentaride.entites.ItemOwnerProfilesEntity;
+import com.skills.rentaride.entites.ItemsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +15,5 @@ import java.util.Optional;
  * Time: 1:04 AM
  */
 @Repository
-public interface ItemTypeRepository extends JpaRepository<ItemTypeEntity,Integer> {
+public interface ItemOwnerProfilesRepository extends JpaRepository<ItemOwnerProfilesEntity,Integer> {
 }

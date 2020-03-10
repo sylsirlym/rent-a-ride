@@ -14,8 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateItemDTO {
-    private int lendItemType;
-    private String serialNumber;
-    private int lendItemOwnerProfileID;
+public class LendRequestDTO {
+    private int profileID;
+    private int lendItemID;
 }

@@ -3,6 +3,7 @@ package com.skills.rentaride.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.skills.rentaride.configs.ApplicationConfigs;
+import com.skills.rentaride.dtos.requests.CreateItemDTO;
 import com.skills.rentaride.dtos.requests.CreateItemTypeDTO;
 import com.skills.rentaride.dtos.requests.CreateUserDTO;
 import com.skills.rentaride.dtos.requests.EditItemTypeDTO;
@@ -10,11 +11,9 @@ import com.skills.rentaride.dtos.responses.ProfilesDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
 import com.skills.rentaride.entites.CustomersEntity;
 import com.skills.rentaride.entites.ItemTypeEntity;
+import com.skills.rentaride.entites.ItemsEntity;
 import com.skills.rentaride.entites.ProfilesEntity;
-import com.skills.rentaride.exceptions.GenericException;
-import com.skills.rentaride.exceptions.InvalidPinStatusException;
-import com.skills.rentaride.exceptions.ItemTypeNotFoundException;
-import com.skills.rentaride.exceptions.ProfileNotFoundException;
+import com.skills.rentaride.exceptions.*;
 import com.skills.rentaride.utilities.Utils;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -43,23 +42,44 @@ public class ItemsService {
     private final ObjectMapper objectMapper;
     private final ModelMapper modelMapper;
 
-    public ResponseDTO createUser(CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
-        CustomersEntity customersEntity = utils.createCustomerObject(createUserDTO);
-        storageService.persistCustomersEntity(customersEntity);
-        ProfilesEntity profilesEntity = utils.createProfileObject(createUserDTO, customersEntity);
-        logger.info("Profiles Entity to save::{}", objectMapper.writeValueAsString(profilesEntity));
-        ProfilesEntity newP = storageService.persistProfilesEntity(profilesEntity);
-        //Generate One Time Pin
-        utils.generateOTP(newP);
-        storageService.persistProfilesEntity(newP);
+    public ResponseDTO createItem(CreateItemDTO createItemDTO) throws ItemTypeNotFoundException, ItemOwnerNotFoundException {
+        ItemsEntity itemsEntity = new ItemsEntity();
+        itemsEntity.setSerialNumber(createItemDTO.getSerialNumber());
+        itemsEntity.setItemTypeEntity(storageService.findItemTypeByID(createItemDTO.getLendItemType()));
+        itemsEntity.setItemOwnerProfileEntity(storageService.findItemOwnerByID(createItemDTO.getLendItemOwnerProfileID()));
+        storageService.persistItem(itemsEntity);
+        return utils.formulateResponse(
+                applicationConfigs.getSuccessStatusCode(),
+                applicationConfigs.getDefaultSuccessMessage(),
+                itemsEntity,
+                new HashMap<>()
+        );
+    }
+
+    public ResponseDTO fetchItems() throws JsonProcessingException {
+        List<ItemsEntity> itemEntityList = storageService.fetchItems();
+        logger.info("Items list::{}", objectMapper.writeValueAsString(itemEntityList));
 
         return utils.formulateResponse(
                 applicationConfigs.getSuccessStatusCode(),
                 applicationConfigs.getDefaultSuccessMessage(),
-                utils.mapProfileDetails(profilesEntity),
+                itemEntityList,
                 new HashMap<>()
         );
     }
+
+    public ResponseDTO fetchItem(int itemID) throws JsonProcessingException, ItemNotFoundException {
+        ItemsEntity itemEntity = storageService.fetchItemByID(itemID);
+        logger.info("Items list::{}", objectMapper.writeValueAsString(itemEntity));
+
+        return utils.formulateResponse(
+                applicationConfigs.getSuccessStatusCode(),
+                applicationConfigs.getDefaultSuccessMessage(),
+                itemEntity,
+                new HashMap<>()
+        );
+    }
+
 
     public ResponseDTO fetchItemType() throws JsonProcessingException {
         List<ItemTypeEntity> itemTypeEntityList = storageService.fetchItemTypes();
