@@ -2,6 +2,9 @@ package com.skills.rentaride.controller;
 
 import com.skills.rentaride.dtos.requests.LendRequestDTO;
 import com.skills.rentaride.dtos.responses.ResponseDTO;
+import com.skills.rentaride.exceptions.ItemNotFoundException;
+import com.skills.rentaride.exceptions.LendTxnStatusNotFoundException;
+import com.skills.rentaride.exceptions.ProfileNotFoundException;
 import com.skills.rentaride.services.LendingService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LendingController {
     private LendingService lendingService;
     @PostMapping("/rent-item/request")
-    public ResponseDTO lendItem(@RequestBody LendRequestDTO lendRequestDTO){
+    public ResponseDTO lendItem(@RequestBody LendRequestDTO lendRequestDTO) throws LendTxnStatusNotFoundException, ProfileNotFoundException, ItemNotFoundException {
         return lendingService.requestItem(lendRequestDTO);
     }
 }
