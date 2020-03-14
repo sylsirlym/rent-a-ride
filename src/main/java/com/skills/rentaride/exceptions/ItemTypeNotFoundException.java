@@ -10,11 +10,22 @@ package com.skills.rentaride.exceptions;
 public class ItemTypeNotFoundException extends Throwable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new Item type not found exception.
+     *
+     * @param message the message
+     */
     public ItemTypeNotFoundException(String message)
     {
         super(message);
     }
 
+    /**
+     * Instantiates a new Item type not found exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public ItemTypeNotFoundException(String message, Throwable cause)
     {
         super(message, cause);

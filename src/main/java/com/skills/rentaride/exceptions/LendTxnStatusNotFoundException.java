@@ -10,11 +10,22 @@ package com.skills.rentaride.exceptions;
 public class LendTxnStatusNotFoundException extends Throwable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new Lend txn status not found exception.
+     *
+     * @param message the message
+     */
     public LendTxnStatusNotFoundException(String message)
     {
         super(message);
     }
 
+    /**
+     * Instantiates a new Lend txn status not found exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public LendTxnStatusNotFoundException(String message, Throwable cause)
     {
         super(message, cause);

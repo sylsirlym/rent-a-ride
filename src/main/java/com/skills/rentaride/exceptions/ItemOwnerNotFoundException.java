@@ -10,11 +10,22 @@ package com.skills.rentaride.exceptions;
 public class ItemOwnerNotFoundException extends Throwable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new Item owner not found exception.
+     *
+     * @param message the message
+     */
     public ItemOwnerNotFoundException(String message)
     {
         super(message);
     }
 
+    /**
+     * Instantiates a new Item owner not found exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public ItemOwnerNotFoundException(String message, Throwable cause)
     {
         super(message, cause);

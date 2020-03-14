@@ -16,6 +16,11 @@ import org.springframework.context.annotation.Scope;
  */
 @Configuration
 public class LoggerConfig {
+    /**
+     * Produce logger logger.
+     *
+     * @return the logger
+     */
     @Bean
     @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public Logger produceLogger() {

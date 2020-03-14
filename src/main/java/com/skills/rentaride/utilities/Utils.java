@@ -45,6 +45,13 @@ public class Utils {
     private static final Logger logger = LogManager
             .getLogger(Utils.class);
 
+    /**
+     * Create profile object profiles entity.
+     *
+     * @param createUserDTO   the create user dto
+     * @param customersEntity the customers entity
+     * @return the profiles entity
+     */
     public ProfilesEntity createProfileObject(CreateUserDTO createUserDTO, CustomersEntity customersEntity) {
         ProfilesEntity profilesEntity = new ProfilesEntity();
         profilesEntity.setMsisdn(createUserDTO.getMsisdn());
@@ -57,6 +64,12 @@ public class Utils {
         return profilesEntity;
     }
 
+    /**
+     * Create customer object customers entity.
+     *
+     * @param createUserDTO the create user dto
+     * @return the customers entity
+     */
     public CustomersEntity createCustomerObject(CreateUserDTO createUserDTO) {
         CustomersEntity customersEntity = new CustomersEntity();
         customersEntity.setFName(createUserDTO.getFname());
@@ -66,6 +79,15 @@ public class Utils {
         return customersEntity;
     }
 
+    /**
+     * Formulate response response dto.
+     *
+     * @param statusCode     the status code
+     * @param defaultMessage the default message
+     * @param data           the data
+     * @param templates      the templates
+     * @return the response dto
+     */
     public ResponseDTO formulateResponse(Integer statusCode, String defaultMessage, Object data, HashMap<String, String> templates){
 
         return new ResponseDTO(
@@ -96,6 +118,12 @@ public class Utils {
         return responseTemplatesEntity!=null ? responseTemplatesEntity.getResponseTemplate() : null;
     }
 
+    /**
+     * Generate random number string.
+     *
+     * @param digCount the dig count
+     * @return the string
+     */
     public String generateRandomNumber(int digCount)
     {
         StringBuilder stringBuilder = new StringBuilder(digCount);
@@ -108,12 +136,26 @@ public class Utils {
         return "123456";
     }
 
+    /**
+     * Generate otp.
+     *
+     * @param profilesEntity the profiles entity
+     * @throws InvalidPinStatusException the invalid pin status exception
+     * @throws GenericException          the generic exception
+     */
     public void generateOTP(ProfilesEntity profilesEntity) throws InvalidPinStatusException, GenericException {
         //Update Pin Status to OTP
         profilesEntity.setPinStatusEntity(this.getPinStatus(applicationConfigs.getOtpPinStatus()));
         this.updatePinHash(profilesEntity, this.generateRandomNumber(applicationConfigs.getPinLength()));
     }
 
+    /**
+     * Update pin hash.
+     *
+     * @param profilesEntity the profiles entity
+     * @param pin            the pin
+     * @throws GenericException the generic exception
+     */
     public void updatePinHash(ProfilesEntity profilesEntity, String pin) throws GenericException {
         logger.info("About to create pin hash with pin:{}", pin);
         //Use hashing since it is irrevesible
@@ -125,6 +167,14 @@ public class Utils {
         profilesEntity.setDatePinChanged(Timestamp.valueOf(LocalDateTime.now()));
     }
 
+    /**
+     * Hash pin string.
+     *
+     * @param plainText the plain text
+     * @param algo      the algo
+     * @return the string
+     * @throws GenericException the generic exception
+     */
     public String hashPin (String plainText, String algo) throws GenericException {
         try {
             logger.info("begining hash process");
@@ -155,6 +205,12 @@ public class Utils {
         }
     }
 
+    /**
+     * Map profile details profiles dto.
+     *
+     * @param profilesEntity the profiles entity
+     * @return the profiles dto
+     */
     public ProfilesDTO mapProfileDetails(ProfilesEntity profilesEntity) {
         return new ProfilesDTO(
                 profilesEntity.getPinStatusEntity().getPinStatusID(),
@@ -165,6 +221,14 @@ public class Utils {
         );
     }
 
+    /**
+     * Validate pin boolean.
+     *
+     * @param profilesEntity the profiles entity
+     * @param pin            the pin
+     * @return the boolean
+     * @throws GenericException the generic exception
+     */
     public boolean validatePin(ProfilesEntity profilesEntity, String pin) throws GenericException {
         logger.info("Pin::{}",  profilesEntity.getPinHash());
         logger.info("Pin2::{}",  this.hashPin(profilesEntity.getProfileID() + pin,

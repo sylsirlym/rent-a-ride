@@ -17,6 +17,11 @@ import java.text.SimpleDateFormat;
  */
 @Configuration
 public class ObjectMapperConfig {
+    /**
+     * Object mapper object mapper.
+     *
+     * @return the object mapper
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();

@@ -14,5 +14,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ResponseTemplatesRepository extends JpaRepository<ResponseTemplatesEntity,Integer> {
+    /**
+     * Find by status code response templates entity.
+     *
+     * @param statusCode the status code
+     * @return the response templates entity
+     */
     ResponseTemplatesEntity findByStatusCode(Integer statusCode);
 }

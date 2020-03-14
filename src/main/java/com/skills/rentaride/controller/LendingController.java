@@ -24,6 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class LendingController {
     private LendingService lendingService;
+
+    /**
+     * Lend item response dto.
+     *
+     * @param lendRequestDTO the lend request dto
+     * @return the response dto
+     * @throws LendTxnStatusNotFoundException the lend txn status not found exception
+     * @throws ProfileNotFoundException       the profile not found exception
+     * @throws ItemNotFoundException          the item not found exception
+     */
     @PostMapping("/rent-item/request")
     public ResponseDTO lendItem(@RequestBody LendRequestDTO lendRequestDTO) throws LendTxnStatusNotFoundException, ProfileNotFoundException, ItemNotFoundException {
         return lendingService.requestItem(lendRequestDTO);

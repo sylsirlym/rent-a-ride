@@ -10,11 +10,22 @@ package com.skills.rentaride.exceptions;
 public class ProfileNotFoundException extends Throwable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Instantiates a new Profile not found exception.
+     *
+     * @param message the message
+     */
     public ProfileNotFoundException(String message)
     {
         super(message);
     }
 
+    /**
+     * Instantiates a new Profile not found exception.
+     *
+     * @param message the message
+     * @param cause   the cause
+     */
     public ProfileNotFoundException(String message, Throwable cause)
     {
         super(message, cause);

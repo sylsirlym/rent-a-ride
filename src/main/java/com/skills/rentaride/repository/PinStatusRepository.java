@@ -14,5 +14,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface PinStatusRepository extends JpaRepository<PinStatusEntity,Integer> {
+    /**
+     * Find by pin status pin status entity.
+     *
+     * @param pinStatus the pin status
+     * @return the pin status entity
+     */
     PinStatusEntity findByPinStatus(String pinStatus);
 }

@@ -15,5 +15,11 @@ import java.util.Optional;
  */
 @Repository
 public interface ProfilesRepository extends JpaRepository<ProfilesEntity,Integer> {
-   Optional<ProfilesEntity> findProfilesEntityByMsisdn(String msisdn);
+    /**
+     * Find profiles entity by msisdn optional.
+     *
+     * @param msisdn the msisdn
+     * @return the optional
+     */
+    Optional<ProfilesEntity> findProfilesEntityByMsisdn(String msisdn);
 }

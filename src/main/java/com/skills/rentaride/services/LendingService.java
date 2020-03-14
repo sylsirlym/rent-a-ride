@@ -29,6 +29,15 @@ public class LendingService {
     private ApplicationConfigs applicationConfigs;
     private final Logger logger;
 
+    /**
+     * Request item response dto.
+     *
+     * @param lendRequestDTO the lend request dto
+     * @return the response dto
+     * @throws ProfileNotFoundException       the profile not found exception
+     * @throws ItemNotFoundException          the item not found exception
+     * @throws LendTxnStatusNotFoundException the lend txn status not found exception
+     */
     public ResponseDTO requestItem(LendRequestDTO lendRequestDTO) throws ProfileNotFoundException, ItemNotFoundException, LendTxnStatusNotFoundException {
         LendTransactionsEntity lendTransactionsEntity = new LendTransactionsEntity();
         lendTransactionsEntity.setItemsEntity(storageService.fetchItemByID(lendRequestDTO.getLendItemID()));

@@ -41,6 +41,15 @@ public class UsersService {
     private final ObjectMapper objectMapper;
     private final ModelMapper modelMapper;
 
+    /**
+     * Create user response dto.
+     *
+     * @param createUserDTO the create user dto
+     * @return the response dto
+     * @throws JsonProcessingException   the json processing exception
+     * @throws InvalidPinStatusException the invalid pin status exception
+     * @throws GenericException          the generic exception
+     */
     public ResponseDTO createUser(CreateUserDTO createUserDTO) throws JsonProcessingException, InvalidPinStatusException, GenericException {
         CustomersEntity customersEntity = utils.createCustomerObject(createUserDTO);
         storageService.persistCustomersEntity(customersEntity);
@@ -59,6 +68,14 @@ public class UsersService {
         );
     }
 
+    /**
+     * Fetch user response dto.
+     *
+     * @param msisdn the msisdn
+     * @return the response dto
+     * @throws ProfileNotFoundException the profile not found exception
+     * @throws JsonProcessingException  the json processing exception
+     */
     public ResponseDTO fetchUser(String msisdn) throws ProfileNotFoundException, JsonProcessingException {
         ProfilesDTO profilesDTO = utils.mapProfileDetails(storageService.fetchProfileByMsisdn(msisdn));
         logger.info("Mapped profile::{}", objectMapper.writeValueAsString(profilesDTO));
@@ -70,6 +87,14 @@ public class UsersService {
                 );
     }
 
+    /**
+     * Auth pin response dto.
+     *
+     * @param authPinDTO the auth pin dto
+     * @return the response dto
+     * @throws ProfileNotFoundException the profile not found exception
+     * @throws GenericException         the generic exception
+     */
     public ResponseDTO authPin(AuthPinDTO authPinDTO) throws ProfileNotFoundException, GenericException {
         ProfilesEntity profilesEntity = storageService.fetchProfileByMsisdn(authPinDTO.getMsisdn());
         //Todo Evaluate pin status
