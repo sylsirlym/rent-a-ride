@@ -44,7 +44,7 @@ public class UsersController {
     }
 
  /**
-  * Fetch customer profile response dto.
+  * Fetch customer profile response using using mobile number.
   *
   * @param msisdn the msisdn
   * @return the response dto
@@ -58,7 +58,7 @@ public class UsersController {
     }
 
  /**
-  * Authenticate customer pin response dto.
+  * Authenticate customer pin response a new member gets an otp but an active member will have his or her own pin.
   *
   * @param authPinDTO the auth pin dto
   * @return the response dto
