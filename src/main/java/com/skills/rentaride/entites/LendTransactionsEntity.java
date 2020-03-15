@@ -12,9 +12,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by sylvester
+ * Created by lilian
  * Project rent-a-ride
- * User: sylvester
+ * User: lilian
  * Date: 2/25/20
  * Time: 12:19 AM
  */

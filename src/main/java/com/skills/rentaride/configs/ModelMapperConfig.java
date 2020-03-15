@@ -9,9 +9,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by sylvester
+ * Created by lilian
  * Project rent-a-ride
- * User: sylvester
+ * User: lilian
  * Date: 2/25/20
  * Time: 1:15 AM
  */

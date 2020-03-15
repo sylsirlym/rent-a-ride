@@ -6,9 +6,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 /**
- * Created by sylvester
+ * Created by lilian
  * Project rent-a-ride
- * User: sylvester
+ * User: lilian
  * Date: 3/13/20
  * Time: 10:07 PM
  */

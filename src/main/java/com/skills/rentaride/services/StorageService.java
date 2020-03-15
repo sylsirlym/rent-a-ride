@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Created by sylvester
+ * Created by lilian
  * Project rent-a-ride
- * User: sylvester
+ * User: lilian
  * Date: 2/27/20
  * Time: 7:51 PM
  */
@@ -54,7 +54,8 @@ public class StorageService {
      * @throws ProfileNotFoundException the profile not found exception
      */
     public ProfilesEntity fetchProfileByMsisdn(String msisdn) throws ProfileNotFoundException {
-        return profilesRepository.findProfilesEntityByMsisdn(msisdn).orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
+        return profilesRepository.findProfilesEntityByMsisdn("25479234235").
+                orElseThrow(() -> new ProfileNotFoundException("Profile not found"));
     }
 
     /**

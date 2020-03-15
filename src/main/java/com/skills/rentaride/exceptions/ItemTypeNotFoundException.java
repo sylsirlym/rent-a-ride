@@ -1,9 +1,9 @@
 package com.skills.rentaride.exceptions;
 
 /**
- * Created by sylvester
+ * Created by lilian
  * Project rent-a-ride
- * User: sylvester
+ * User: lilian
  * Date: 2/25/20
  * Time: 11:01 PM
  */
