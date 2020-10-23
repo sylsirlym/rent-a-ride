@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProfilesDTO {
+    private int profileID;
     private int pinStatus;
     private String msisdn;
     private String fName;
